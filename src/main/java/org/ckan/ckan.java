@@ -152,60 +152,60 @@ public class ckan extends BaseStep implements StepInterface {
 		
 		// Apply proxy settings
 		if(meta.getProxyHost() != null) {
-			System.setProperty("http.proxyHost", meta.getProxyHost());
-			System.setProperty("https.proxyHost", meta.getProxyHost());
+			System.setProperty("http.proxyHost", environmentSubstitute(meta.getProxyHost()));
+			System.setProperty("https.proxyHost", environmentSubstitute(meta.getProxyHost()));
 		}
 		
 		if(meta.getProxyPort() != null) {
-			System.setProperty("http.proxyPort", meta.getProxyPort());
-			System.setProperty("https.proxyPort", meta.getProxyPort());
+			System.setProperty("http.proxyPort", environmentSubstitute(meta.getProxyPort()));
+			System.setProperty("https.proxyPort", environmentSubstitute(meta.getProxyPort()));
 		}
 		
 		if(meta.getProxyUser() != null) {
-			System.setProperty("http.proxyUser", meta.getProxyUser());
-			System.setProperty("https.proxyUser", meta.getProxyUser());
+			System.setProperty("http.proxyUser", environmentSubstitute(meta.getProxyUser()));
+			System.setProperty("https.proxyUser", environmentSubstitute(meta.getProxyUser()));
 		}
 		
 		if(meta.getProxyPass() != null) {
-			System.setProperty("http.proxyPass", meta.getProxyPass());
-			System.setProperty("https.proxyPass", meta.getProxyPass());
+			System.setProperty("http.proxyPass", environmentSubstitute(meta.getProxyPass()));
+			System.setProperty("https.proxyPass", environmentSubstitute(meta.getProxyPass()));
 		}
 		
 		
 		// Get user parameters
 		if (meta.getDomain() != null) {
-			ckanDomain = meta.getDomain();
+			ckanDomain = environmentSubstitute(meta.getDomain());
 		}
 		
 		if (meta.getApiKey() != null) {
-			ckanApiKey = meta.getApiKey();
+			ckanApiKey = environmentSubstitute(meta.getApiKey());
 		}
 		
 		if (meta.getPackageId() != null) {
-			ckanPackageId = meta.getPackageId();
+			ckanPackageId = environmentSubstitute(meta.getPackageId());
 		}
 		
 		if (meta.getResourceTitle() != null) {
-			ckanResourceTitle = meta.getResourceTitle();
+			ckanResourceTitle = environmentSubstitute(meta.getResourceTitle());
 		}
 		
 		if (meta.getResourceDescription() != null) {
-			ckanResourceDescription = meta.getResourceDescription();
+			ckanResourceDescription = environmentSubstitute(meta.getResourceDescription());
 		}
 		
 		if (meta.getResourceId() != null) {
-			ckanResourceId = meta.getResourceId();
+			ckanResourceId = environmentSubstitute(meta.getResourceId());
 		}
 		
 		try {
-			ckanBatchSize = Integer.parseInt(meta.getBatchSize());
+			ckanBatchSize = Integer.parseInt(environmentSubstitute(meta.getBatchSize()));
 		} catch (NumberFormatException e) {
 			if (log.isBasic()) logBasic("Batch Size [" + meta.getBatchSize() + "] was not valid, set to 5000");
 		    ckanBatchSize = 5000;
 		}
 		
 		if (meta.getPrimaryKey() != null) {
-			ckanPrimaryKeyList = Arrays.asList(meta.getPrimaryKey().split("\\s*;;\\s*"));
+			ckanPrimaryKeyList = Arrays.asList(environmentSubstitute(meta.getPrimaryKey()).split("\\s*;;\\s*"));
 		}
 		
 		return super.init(smi, sdi);

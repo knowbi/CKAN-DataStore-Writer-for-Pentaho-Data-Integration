@@ -157,7 +157,6 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 	
 	// Set sensible defaults for a new step
 	public void setDefault() {
-//		Domain = "http://";
 		Domain = "";
 		ApiKey = "";
 		PackageId = "";

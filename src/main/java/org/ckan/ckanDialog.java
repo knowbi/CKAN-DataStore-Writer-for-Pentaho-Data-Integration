@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.trans.TransMeta;
+import org.pentaho.di.ui.core.widget.TextVar;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
@@ -38,60 +39,60 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 	private FormData	fdckanConnection;
 	
 	private Label		wlDomain;
-	private Text		wDomain;
+	private TextVar wDomain;
 	private FormData	fdlDomain, fdDomain;
 	
 	private Label		wlApiKey;
-	private Text		wApiKey;
+	private TextVar		wApiKey;
 	private FormData	fdlApiKey, fdApiKey;
 	
 	private Group		ResourceDetails;
 	private FormData	fdResourceDetails;
 	
 	private Label		wlPackageId;
-	private Text		wPackageId;
+	private TextVar		wPackageId;
 	private FormData	fdlPackageId, fdPackageId;
 	
 	private Label		wlTitle;
-	private Text		wTitle;
+	private TextVar		wTitle;
 	private FormData	fdlTitle, fdTitle;
 
 	private Label		wlDescription;
-	private Text		wDescription;
+	private TextVar		wDescription;
 	private FormData	fdlDescription, fdDescription;
 	
 	private Label		wlResourceId;
-	private Text		wResourceId;
+	private TextVar		wResourceId;
 	private FormData	fdlResourceId, fdResourceId;
 	
 	private Group		AdvancedSettings;
 	private FormData	fdAdvancedSettings;
 
 	private Label		wlBatchSize;
-	private Text		wBatchSize;
+	private TextVar		wBatchSize;
 	private FormData	fdlBatchSize, fdBatchSize;
 	
 	private Label		wlPrimaryKey;
-	private Text		wPrimaryKey;
+	private TextVar		wPrimaryKey;
 	private FormData	fdlPrimaryKey, fdPrimaryKey;
 	
 	private Group 		proxySettings; 
 	private FormData	fdProxySettings; 
 	
 	private Label 		wlProxyHost; 
-	private Text		wProxyHost; 
+	private TextVar		wProxyHost;
 	private FormData 	fdlProxyHost, fdProxyHost; 
 	
 	private Label 		wlProxyPort; 
-	private Text		wProxyPort; 
+	private TextVar		wProxyPort;
 	private FormData 	fdlProxyPort, fdProxyPort; 
 	
 	private Label 		wlProxyUser; 
-	private Text		wProxyUser; 
+	private TextVar		wProxyUser;
 	private FormData 	fdlProxyUser, fdProxyUser; 
 	
 	private Label 		wlProxyPass; 
-	private Text		wProxyPass; 
+	private TextVar		wProxyPass;
 	private FormData 	fdlProxyPass, fdProxyPass; 
 	
 	private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
@@ -174,7 +175,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlDomain.top  = new FormAttachment(0, margin);
 		wlDomain.setLayoutData(fdlDomain);
 		
-		wDomain=new Text(ckanConnection, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wDomain=new TextVar(transMeta, ckanConnection, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wDomain.addModifyListener(lsMod);
 		fdDomain=new FormData();
 		fdDomain.left = new FormAttachment(middle, 0);
@@ -191,7 +192,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlApiKey.top  = new FormAttachment(wDomain, margin);
 		wlApiKey.setLayoutData(fdlApiKey);
 		
-		wApiKey=new Text(ckanConnection, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wApiKey=new TextVar(transMeta, ckanConnection, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wApiKey.addModifyListener(lsMod);
 		fdApiKey=new FormData();
 		fdApiKey.left = new FormAttachment(middle, 0);
@@ -223,7 +224,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlPackageId.top  = new FormAttachment(0, margin);
 		wlPackageId.setLayoutData(fdlPackageId);
 		
-		wPackageId=new Text(ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wPackageId=new TextVar(transMeta, ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wPackageId.addModifyListener(lsMod);
 		fdPackageId=new FormData();
 		fdPackageId.left = new FormAttachment(middle, 0);
@@ -240,7 +241,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlTitle.top  = new FormAttachment(wPackageId, margin);
 		wlTitle.setLayoutData(fdlTitle);
 		
-		wTitle=new Text(ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wTitle=new TextVar(transMeta, ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wTitle.addModifyListener(lsMod);
 		fdTitle=new FormData();
 		fdTitle.left = new FormAttachment(middle, 0);
@@ -257,7 +258,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlDescription.top  = new FormAttachment(wTitle, margin);
 		wlDescription.setLayoutData(fdlDescription);
 		
-		wDescription=new Text(ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wDescription=new TextVar(transMeta, ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wDescription.addModifyListener(lsMod);
 		fdDescription=new FormData();
 		fdDescription.left = new FormAttachment(middle, 0);
@@ -274,7 +275,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlResourceId.top  = new FormAttachment(wDescription, margin);
 		wlResourceId.setLayoutData(fdlResourceId);
 		
-		wResourceId=new Text(ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wResourceId=new TextVar(transMeta, ResourceDetails, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wResourceId.addModifyListener(lsMod);
 		fdResourceId=new FormData();
 		fdResourceId.left = new FormAttachment(middle, 0);
@@ -306,7 +307,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlBatchSize.top  = new FormAttachment(0, margin);
 		wlBatchSize.setLayoutData(fdlBatchSize);
 		
-		wBatchSize=new Text(AdvancedSettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wBatchSize=new TextVar(transMeta, AdvancedSettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wBatchSize.addModifyListener(lsMod);
 		fdBatchSize=new FormData();
 		fdBatchSize.left = new FormAttachment(middle, 0);
@@ -323,7 +324,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlPrimaryKey.top  = new FormAttachment(wBatchSize, margin);
 		wlPrimaryKey.setLayoutData(fdlPrimaryKey);
 		
-		wPrimaryKey=new Text(AdvancedSettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wPrimaryKey=new TextVar(transMeta, AdvancedSettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wPrimaryKey.addModifyListener(lsMod);
 		fdPrimaryKey=new FormData();
 		fdPrimaryKey.left = new FormAttachment(middle, 0);
@@ -355,7 +356,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlProxyHost.top = new FormAttachment(0, margin);
 		wlProxyHost.setLayoutData(fdlProxyHost);
 		
-		wProxyHost = new Text(proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wProxyHost = new TextVar(transMeta, proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wProxyHost.addModifyListener(lsMod);
 		fdProxyHost=new FormData();
 		fdProxyHost.left = new FormAttachment(middle, 0);
@@ -372,7 +373,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlProxyPort.top = new FormAttachment(wProxyHost, margin);
 		wlProxyPort.setLayoutData(fdlProxyPort);
 		
-		wProxyPort = new Text(proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wProxyPort = new TextVar(transMeta, proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wProxyPort.addModifyListener(lsMod);
 		fdProxyPort = new FormData();
 		fdProxyPort.left = new FormAttachment(middle, 0);
@@ -389,7 +390,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlProxyUser.top = new FormAttachment(wProxyPort, margin);
 		wlProxyUser.setLayoutData(fdlProxyUser);
 		
-		wProxyUser = new Text(proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wProxyUser = new TextVar(transMeta, proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wProxyUser.addModifyListener(lsMod);
 		fdProxyUser = new FormData();
 		fdProxyUser.left = new FormAttachment(middle,0);
@@ -406,7 +407,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdlProxyPass.top = new FormAttachment(wProxyUser, margin);
 		wlProxyPass.setLayoutData(fdlProxyPass);
 		
-		wProxyPass = new Text(proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
+		wProxyPass = new TextVar(transMeta, proxySettings, SWT.SINGLE | SWT.LEFT | SWT.BORDER);
 		wProxyPass.addModifyListener(lsMod);
 		fdProxyPass = new FormData(); 
 		fdProxyPass.left = new FormAttachment(middle,0);
@@ -541,9 +542,10 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		stepname = wStepname.getText(); // return value
 		
 		String domain = wDomain.getText().trim();
-		if (!domain.startsWith("http://") && !domain.startsWith("https://")) {
-			domain = "http://" + domain;
-		}
+//		Removed. Interferes with use of parameters.
+//		if (!domain.startsWith("http://") && !domain.startsWith("https://")) {
+//			domain = "http://" + domain;
+//		}
 		while (domain.endsWith("/")) {
 			domain = domain.substring(0,domain.length()-1);
 		}
@@ -551,7 +553,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		String apiKey = wApiKey.getText().trim();
 		
 		String packageId = wPackageId.getText().trim();
-		if (packageId.length() != 0) {
+		if (packageId.length() != 0 && !packageId.startsWith("${")) {
 			packageId = toSlug(packageId);
 		}
 		
