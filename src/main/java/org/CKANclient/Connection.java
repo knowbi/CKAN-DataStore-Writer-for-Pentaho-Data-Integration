@@ -1,4 +1,4 @@
-package main.java.org.CKANclient;
+package org.CKANclient;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.File;
 import java.io.IOException;
 
+import org.CKANclient.CKANException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -64,7 +65,7 @@ public final class Connection {
 	 * @param  path The URL path to make the POST request to
 	 * @param  data The data to be posted to the URL
 	 * @returns The String contents of the response
-	 * @throws A CKANException if the request fails
+	 * @throws CKANException if the request fails
 	 */
 	protected String Post(String path, String data) throws CKANException {
 		URL url = null;
@@ -83,7 +84,7 @@ public final class Connection {
 			HttpPost postRequest = new HttpPost(url.toString());
 			postRequest.setHeader( "X-CKAN-API-Key", this._apikey );
 
-			StringEntity input = new StringEntity(data);
+			StringEntity input = new StringEntity(data, "UTF-8");
 			input.setContentType("application/json");
 			postRequest.setEntity(input);
 
@@ -117,7 +118,7 @@ public final class Connection {
 	 * @param  resource The resource to be posted to the URL
 	 * @param  filePath The path of the file to be uploaded
 	 * @returns The String contents of the response
-	 * @throws A CKANException if the request fails
+	 * @throws CKANException if the request fails
 	 */
 	protected String ResourceMultiPartPost(String path, Resource resource, String filePath) throws CKANException {
 		URL url = null;
