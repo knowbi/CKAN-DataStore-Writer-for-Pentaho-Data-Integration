@@ -1,8 +1,9 @@
-package main.java.org.ckan;
+package org.ckan;
 
 import java.util.List;
 import java.util.Map;
 
+import org.ckan.ckan;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;

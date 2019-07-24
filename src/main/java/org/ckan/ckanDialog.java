@@ -1,10 +1,11 @@
-package main.java.org.ckan;
+package org.ckan;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import org.ckan.ckanMeta;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

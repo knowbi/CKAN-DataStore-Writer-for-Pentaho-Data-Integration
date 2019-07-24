@@ -1,4 +1,4 @@
-package main.java.org.ckan;
+package org.ckan;
 
 import org.pentaho.di.i18n.BaseMessages;
 
