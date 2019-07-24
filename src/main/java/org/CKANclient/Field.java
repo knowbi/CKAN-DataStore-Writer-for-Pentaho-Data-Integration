@@ -1,4 +1,4 @@
-package main.java.org.CKANclient;
+package org.CKANclient;
 
 /**
  * Represents a field

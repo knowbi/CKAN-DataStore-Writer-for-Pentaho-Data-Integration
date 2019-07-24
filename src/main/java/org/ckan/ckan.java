@@ -1,4 +1,4 @@
-package main.java.org.ckan;
+package org.ckan;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -260,10 +260,12 @@ public class ckan extends BaseStep implements StepInterface {
 			return true;
 		} catch ( CKANException cke ) {
 			logError(cke.toString());
+			cke.printStackTrace();
 			return false;
 		}
 		catch ( Exception e ) {
 			logError(e.toString());
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -297,10 +299,12 @@ public class ckan extends BaseStep implements StepInterface {
 			return true;
 		} catch ( CKANException cke ) {
 			logError(cke.toString());
+			cke.printStackTrace();
 			return false;
 		}
 		catch ( Exception e ) {
 			logError(e.toString());
+			e.printStackTrace();
 			return false;
 		}
 	}
