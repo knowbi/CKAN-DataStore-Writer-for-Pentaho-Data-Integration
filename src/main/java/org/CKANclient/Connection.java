@@ -30,18 +30,20 @@ public final class Connection {
 	private String m_host;
 	private int m_port;
 	private String _apikey = null;
+	private String charset;
 
 	public Connection(  ) {
-		this("http://datahub.io", 80);
+		this("http://datahub.io", 80, "UTF-8");
 	}
 
 	public Connection( String host  ) {
-		this( host, 80 );
+		this( host, 80 , "UTF-8" );
 	}
 
-	public Connection( String host, int port ) {
+	public Connection( String host, int port , String charset) {
 		this.m_host = host;
 		this.m_port = port;
+		this.charset = charset;
 
 		try {
 			URL u = new URL( this.m_host + ":" + this.m_port + "/api");
@@ -84,7 +86,7 @@ public final class Connection {
 			HttpPost postRequest = new HttpPost(url.toString());
 			postRequest.setHeader( "X-CKAN-API-Key", this._apikey );
 
-			StringEntity input = new StringEntity(data, "UTF-8");
+			StringEntity input = new StringEntity(data, charset);
 			input.setContentType("application/json");
 			postRequest.setEntity(input);
 

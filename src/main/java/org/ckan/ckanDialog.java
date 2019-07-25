@@ -2,17 +2,15 @@ package org.ckan;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.ckan.ckanMeta;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -30,6 +28,8 @@ import org.pentaho.di.ui.core.widget.TextVar;
 import org.pentaho.di.ui.trans.step.BaseStepDialog;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
+import org.eclipse.swt.graphics.Cursor;
+import java.nio.charset.Charset;
 
 public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 {
@@ -93,7 +93,12 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 	
 	private Label 		wlProxyPass; 
 	private TextVar		wProxyPass;
-	private FormData 	fdlProxyPass, fdProxyPass; 
+	private FormData 	fdlProxyPass, fdProxyPass;
+
+	private Label wlCharset;
+	private CCombo wCharset;
+	private FormData fdlCharset, fdCharset;
+	private boolean gotCharset = false;
 	
 	private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
 	private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
@@ -183,6 +188,7 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdDomain.top  = new FormAttachment(0, margin);
 		wDomain.setLayoutData(fdDomain);
 
+
 		// ApiKey line
 		wlApiKey=new Label(ckanConnection, SWT.RIGHT);
 		wlApiKey.setText(Messages.getString("ckanDialog.ApiKey.Label")); //$NON-NLS-1$
@@ -199,6 +205,35 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		fdApiKey.right= new FormAttachment(100, 0);
 		fdApiKey.top  = new FormAttachment(wDomain, margin);
 		wApiKey.setLayoutData(fdApiKey);
+
+		//charset
+		wlCharset = new Label( ckanConnection, SWT.RIGHT );
+		wlCharset.setText( Messages.getString(  "ckanDialog.Charset.Label" ) );
+		fdlCharset = new FormData();
+		fdlCharset.left = new FormAttachment( 0, 0 );
+		fdlCharset.top = new FormAttachment( wApiKey, margin );
+		fdlCharset.right = new FormAttachment( middle, -margin );
+		wlCharset.setLayoutData( fdlCharset );
+		wCharset = new CCombo( ckanConnection, SWT.BORDER | SWT.READ_ONLY );
+		wCharset.setEditable( true );
+		wCharset.addModifyListener( lsMod );
+		fdCharset = new FormData();
+		fdCharset.left = new FormAttachment( middle, 0 );
+		fdCharset.top = new FormAttachment( wApiKey, margin );
+		fdCharset.right = new FormAttachment( 100, 0 );
+		wCharset.setLayoutData( fdCharset );
+		wCharset.addFocusListener( new FocusListener() {
+			public void focusLost( org.eclipse.swt.events.FocusEvent e ) {
+			}
+
+			public void focusGained( org.eclipse.swt.events.FocusEvent e ) {
+				Cursor busy = new Cursor( shell.getDisplay(), SWT.CURSOR_WAIT );
+				shell.setCursor( busy );
+				setCharset();
+				shell.setCursor( null );
+				busy.dispose();
+			}
+		} );
 		
 		
 		// Resource Details Group
@@ -528,6 +563,10 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		if(input.getProxyPass() != null) {
 			wProxyPass.setText(input.getProxyPass());
 		}
+
+		if ( input.getStringEntityCharset() != null ) {
+			wCharset.setText( input.getStringEntityCharset() );
+		}
 	}
 	
 	private void cancel()
@@ -590,6 +629,8 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		input.setProxyPort(proxyPort);
 		input.setProxyUser(proxyUser);
 		input.setProxyPass(proxyPass);
+
+		input.setStringEntityCharset( wCharset.getText() );
 		
 		dispose();
 	}
@@ -600,4 +641,25 @@ public class ckanDialog extends BaseStepDialog implements StepDialogInterface
 		String slug = NONLATIN.matcher(normalized).replaceAll("");
 		return slug.toLowerCase(Locale.ENGLISH).replaceAll("-{2,}","-").replaceAll("^-|-$","");
 	}
+
+	private void setCharset() {
+		// Encoding of the text file:
+		if ( !gotCharset ) {
+			gotCharset = true;
+
+			wCharset.removeAll();
+			List<Charset> values = new ArrayList<Charset>( Charset.availableCharsets().values() );
+			for ( Charset charSet : values ) {
+				wCharset.add( charSet.displayName() );
+			}
+
+			// Now select the default!
+			String defEncoding = Const.getEnvironmentVariable( "file.encoding", "UTF-8" );
+			int idx = Const.indexOfString( defEncoding, wCharset.getItems() );
+			if ( idx >= 0 ) {
+				wCharset.select( idx );
+			}
+		}
+	}
+
 }

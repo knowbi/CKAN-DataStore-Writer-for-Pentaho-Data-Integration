@@ -44,6 +44,8 @@ public class ckan extends BaseStep implements StepInterface {
 	private List<Field> fields = new ArrayList<Field>();
 	private LinkedHashMap<String, Object> dataRow = new LinkedHashMap<String, Object>();
 	private List<LinkedHashMap<String, Object>> records = new ArrayList<LinkedHashMap<String, Object>>();
+
+	private String ckanCharset = "UTF-8";
 	
 	
 	public ckan(StepMeta s, StepDataInterface stepDataInterface, int c, TransMeta t, Trans dis) {
@@ -207,7 +209,11 @@ public class ckan extends BaseStep implements StepInterface {
 		if (meta.getPrimaryKey() != null) {
 			ckanPrimaryKeyList = Arrays.asList(environmentSubstitute(meta.getPrimaryKey()).split("\\s*;;\\s*"));
 		}
-		
+
+		if(meta.getStringEntityCharset() != null){
+			ckanCharset = meta.getStringEntityCharset();
+		}
+
 		return super.init(smi, sdi);
 	}
 
@@ -226,7 +232,7 @@ public class ckan extends BaseStep implements StepInterface {
 		else {
 			port= 80;
 		}
-		Client ckanClient = new Client( new Connection(ckanDomain, port), ckanApiKey);
+		Client ckanClient = new Client( new Connection(ckanDomain, port, ckanCharset), ckanApiKey);
 				
 		try {
 			DataStore ds = new DataStore();
@@ -278,7 +284,7 @@ public class ckan extends BaseStep implements StepInterface {
 		else {
 			port= 80;
 		}
-		Client ckanClient = new Client( new Connection(ckanDomain, port), ckanApiKey);
+		Client ckanClient = new Client( new Connection(ckanDomain, port, ckanCharset), ckanApiKey);
 		
 		try {
 			DataStore ds = new DataStore();

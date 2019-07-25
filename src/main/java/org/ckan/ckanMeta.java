@@ -3,7 +3,6 @@ package org.ckan;
 import java.util.List;
 import java.util.Map;
 
-import org.ckan.ckan;
 import org.eclipse.swt.widgets.Shell;
 import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;
@@ -46,7 +45,8 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 	private String ResourceId;
 	private String BatchSize;
 	private String PrimaryKey;
-	private String proxyHost, proxyPort, proxyUser, proxyPass; 
+	private String proxyHost, proxyPort, proxyUser, proxyPass;
+	private String stringEntityCharset;
 
 	public ckanMeta() {
 		super(); // allocate BaseStepInfo
@@ -102,10 +102,15 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 	public String getProxyPass() {
 		return proxyPass; 
 	}
+
+	public String getStringEntityCharset() {
+		return stringEntityCharset;
+	}
 	
 	/**
 	 * @param value	The value to set.
-	 */	
+	 */
+
 	public void setDomain(String Domain) {
 		this.Domain = Domain;
 	}
@@ -153,8 +158,11 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 	public void setProxyPass(String proxyPass) {
 		this.proxyPass = proxyPass;
 	}
-	
-	
+
+	public void setStringEntityCharset(String stringEntityCharset) {
+		this.stringEntityCharset = stringEntityCharset;
+	}
+
 	// Set sensible defaults for a new step
 	public void setDefault() {
 		Domain = "";
@@ -169,6 +177,7 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 		proxyPort = "";
 		proxyUser = "";
 		proxyPass = "";
+		stringEntityCharset="UTF-8";
 	}
 
 	public void getFields(RowMetaInterface r, String origin, RowMetaInterface[] info, StepMeta nextStep, VariableSpace space) {
@@ -196,6 +205,7 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 		retval.append("    ").append(XMLHandler.addTagValue("proxy_port", proxyPort));
 		retval.append("    ").append(XMLHandler.addTagValue("proxy_user", proxyUser));
 		retval.append("    ").append(XMLHandler.addTagValue("proxy_pass", proxyPass));
+		retval.append("    ").append(XMLHandler.addTagValue("charset", stringEntityCharset));
 
 		return retval.toString();
 	}
@@ -214,6 +224,7 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 			proxyPort = XMLHandler.getTagValue(stepnode, "proxy_port");
 			proxyUser = XMLHandler.getTagValue(stepnode, "proxy_user");
 			proxyPass = XMLHandler.getTagValue(stepnode, "proxy_pass");
+			stringEntityCharset = XMLHandler.getTagValue(stepnode, "charset");
 		} catch (Exception e) {
 			throw new KettleXMLException("Template Plugin Unable to read step info from XML node", e);
 		}
@@ -233,6 +244,7 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 			proxyPort = rep.getStepAttributeString(id_step, "proxy_port");
 			proxyUser = rep.getStepAttributeString(id_step, "proxy_user");
 			proxyPass = rep.getStepAttributeString(id_step, "proxy_pass");
+			stringEntityCharset = rep.getStepAttributeString(id_step, "charset");
 		} catch (Exception e) {
 			throw new KettleException("Unexpected error reading step with id_step=" + id_step + " from the repository", e);
 		}
@@ -252,6 +264,7 @@ public class ckanMeta extends BaseStepMeta implements StepMetaInterface {
 			rep.saveStepAttribute(id_transformation, id_step, "proxy_port", proxyPort);
 			rep.saveStepAttribute(id_transformation, id_step, "proxy_user", proxyUser);
 			rep.saveStepAttribute(id_transformation, id_step, "proxy_pass", proxyPass);
+			rep.saveStepAttribute(id_transformation, id_step, "charset", stringEntityCharset);
 		} catch (Exception e) {
 			throw new KettleException("Unable to save step information to the repository, id_step=" + id_step, e);
 		}
