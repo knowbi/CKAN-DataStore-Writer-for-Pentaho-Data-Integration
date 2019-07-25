@@ -1,5 +1,5 @@
 type: java
-targetFolder: target/plugins/knowbi-kettle-ckan-step
+targetFolder: knowbi-kettle-ckan-step
 runTests: false
 notifySlack: true
 saveArtifacts: true

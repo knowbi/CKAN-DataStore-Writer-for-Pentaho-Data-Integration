@@ -10,7 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<kettle.version>8.2.0.0-SNAPSHOT</kettle.version>
 		<swt.version>4.6</swt.version>
-		<kettle.dir>target</kettle.dir>
+		<kettle.dir>.</kettle.dir>
 		<maven.plugins.version>3.1.1</maven.plugins.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>2.11.1</log4j.version>
@@ -31,7 +31,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>${maven.plugins.version}</version>
 				<configuration>
-					<outputDirectory>${kettle.dir}/plugins/knowbi-kettle-ckan-step</outputDirectory>
+					<outputDirectory>${kettle.dir}/knowbi-kettle-ckan-step</outputDirectory>
 					<!-- includes> <include>**/*.png</include> </includes -->
 				</configuration>
 			</plugin>
@@ -47,7 +47,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${kettle.dir}/plugins/knowbi-kettle-ckan-step/lib</outputDirectory>
+							<outputDirectory>${kettle.dir}/knowbi-kettle-ckan-step/lib</outputDirectory>
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
