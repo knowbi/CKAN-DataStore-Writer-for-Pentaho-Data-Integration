@@ -1,0 +1,8 @@
+type: java
+targetFolder: target/plugins/knowbi-kettle-ckan-step
+runTests: false
+notifySlack: true
+saveArtifacts: true
+buildsToKeep: 5
+daysToKeep:
+slackChannel: jenkins
